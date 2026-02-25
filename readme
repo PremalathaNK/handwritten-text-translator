@@ -1,0 +1,39 @@
+# Handwritten Text Translator 🔤🎧
+
+This web application extracts text from **printed or handwritten (cursive supported) English images**, translates it into multiple languages, and generates **audio output** in the selected language.
+
+---
+
+## 🚀 Features
+- Supports **handwritten & printed text**
+- Cursive handwriting supported
+- OCR using EasyOCR
+- Translation to:
+  - English
+  - Hindi
+  - Kannada
+  - Telugu
+  - Tamil
+- Text-to-Speech output
+- Audio is **not stored permanently**
+
+---
+
+## 🛠️ Tech Stack
+- Python
+- Flask
+- EasyOCR
+- OpenCV
+- Google Translate
+- gTTS
+- HTML/CSS
+
+---
+
+## ▶️ How to Run
+
+```bash
+git clone https://github.com/your-username/handwritten-text-translator.git
+cd handwritten-text-translator
+pip install -r requirements.txt
+python app.py

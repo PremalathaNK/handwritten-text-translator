@@ -1,0 +1,8 @@
+flask
+easyocr
+torch
+opencv-python
+pillow
+gtts
+googletrans==4.0.0-rc1
+numpy

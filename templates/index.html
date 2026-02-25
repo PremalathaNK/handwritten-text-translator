@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Handwritten Text Translator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h1>Handwritten Text Translator 🔤🎧</h1>
+
+    <form id="uploadForm">
+        <label>Upload Image:</label>
+        <input type="file" name="image" id="image" accept="image/*" required>
+
+        <label>Text Type:</label>
+        <select name="mode" id="mode">
+            <option value="printed">Printed</option>
+            <option value="handwritten">Handwritten (Cursive Supported)</option>
+        </select>
+
+        <label>Translate To:</label>
+        <select name="language" id="language">
+            <option>English</option>
+            <option>Hindi</option>
+            <option>Kannada</option>
+            <option>Telugu</option>
+            <option>Tamil</option>
+        </select>
+
+        <button type="submit">Process</button>
+    </form>
+
+    <div id="loader" class="hidden">Processing...</div>
+
+    <div class="output">
+        <h3>Extracted Text</h3>
+        <p id="extractedText"></p>
+
+        <h3>Translated Text</h3>
+        <p id="translatedText"></p>
+
+        <audio id="audioPlayer" controls class="hidden"></audio>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
