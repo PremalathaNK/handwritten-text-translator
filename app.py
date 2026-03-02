@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, jsonify
 import cv2
-import numpy as np
 import easyocr
 import os
 import re
@@ -20,7 +19,7 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 app.config["MAX_CONTENT_LENGTH"] = 5 * 1024 * 1024  # 5MB
 
-# Initialize OCR ONCE
+# Initialize OCR once
 reader = easyocr.Reader(['en'], gpu=False)
 
 LANGUAGE_CODES = {
@@ -51,26 +50,15 @@ def clean_text(text):
 def preprocess_printed(image_path):
     img = cv2.imread(image_path)
     img = resize_image(img)
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    return gray
+    return cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
 
 def preprocess_handwritten(image_path):
-    """
-    Best compromise preprocessing:
-    - Preserves thin strokes
-    - Works for light handwriting
-    - Does not destroy cursive
-    """
     img = cv2.imread(image_path)
     img = resize_image(img)
 
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-
-    # Mild contrast enhancement
     gray = cv2.convertScaleAbs(gray, alpha=1.2, beta=10)
-
-    # Light smoothing (do NOT over-blur)
     blur = cv2.GaussianBlur(gray, (3, 3), 0)
 
     return blur
@@ -79,7 +67,12 @@ def preprocess_handwritten(image_path):
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("index.html")   # Landing page
+
+
+@app.route("/translate")
+def translate():
+    return render_template("translate.html")  # Main translator page
 
 
 @app.route("/process", methods=["POST"])
@@ -99,16 +92,16 @@ def process():
     image.save(image_path)
 
     try:
-        # Choose preprocessing
-        if mode == "handwritten":
-            processed = preprocess_handwritten(image_path)
-        else:
-            processed = preprocess_printed(image_path)
+        # Preprocessing
+        processed = (
+            preprocess_handwritten(image_path)
+            if mode == "handwritten"
+            else preprocess_printed(image_path)
+        )
 
-        # EasyOCR expects RGB
         processed_rgb = cv2.cvtColor(processed, cv2.COLOR_GRAY2RGB)
 
-        # OCR (balanced parameters)
+        # OCR
         result = reader.readtext(
             processed_rgb,
             paragraph=True,
@@ -121,9 +114,7 @@ def process():
         extracted_text = clean_text(" ".join(result))
 
         if len(extracted_text) < 5:
-            return jsonify({
-                "error": "Text could not be detected clearly. Please upload a clearer image."
-            })
+            return jsonify({"error": "Text not detected clearly. Try a clearer image."})
 
         # Translation
         target_lang = LANGUAGE_CODES.get(language, "en")
@@ -132,14 +123,12 @@ def process():
             target=target_lang
         ).translate(extracted_text)
 
-        # -------- AUDIO (IN MEMORY ONLY) --------
+        # -------- AUDIO (Base64) --------
         audio_buffer = BytesIO()
-        tts = gTTS(text=translated_text, lang=target_lang)
-        tts.write_to_fp(audio_buffer)
+        gTTS(text=translated_text, lang=target_lang).write_to_fp(audio_buffer)
         audio_buffer.seek(0)
 
         audio_base64 = base64.b64encode(audio_buffer.read()).decode("utf-8")
-        del audio_buffer
 
         return jsonify({
             "extracted_text": extracted_text,
@@ -151,7 +140,6 @@ def process():
         return jsonify({"error": str(e)})
 
     finally:
-        # Clean uploaded image
         if os.path.exists(image_path):
             os.remove(image_path)
 

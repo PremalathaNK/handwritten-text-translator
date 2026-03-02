@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Handwritten Text Translator</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<h1 class="title">Handwritten Text Translator</h1>
+<p class="subtitle">
+    See it. Read it. Hear it.
+</p>
+
+<div class="main-layout">
+
+    <!-- Upload Card -->
+    <div class="card">
+        <h2>Upload</h2>
+
+        <form id="uploadForm">
+            <label>Upload Image</label>
+            <input type="file" name="image" required>
+
+            <label>Text Type</label>
+            <select name="mode">
+                <option value="printed">Printed</option>
+                <option value="handwritten">Handwritten</option>
+            </select>
+
+            <label>Translate To</label>
+            <select name="language">
+                <option>English</option>
+                <option>Hindi</option>
+                <option>Kannada</option>
+                <option>Telugu</option>
+                <option>Tamil</option>
+            </select>
+
+            <button type="submit">Translate & Generate Audio</button>
+        </form>
+
+        <div id="loader" class="hidden">Processing...</div>
+    </div>
+
+    <!-- Text Output -->
+    <div class="card">
+        <h2>Text Output</h2>
+
+        <h4>Extracted Text</h4>
+        <p id="extractedText" class="text-box"></p>
+
+        <h4>Translated Text</h4>
+        <p id="translatedText" class="text-box"></p>
+    </div>
+
+    <!-- Audio Output -->
+    <div class="card">
+        <h2>Audio Output</h2>
+        <audio id="audioPlayer" controls class="hidden"></audio>
+    </div>
+
+</div>
+
+<footer>
+    © 2026 Handwritten Translator 
+</footer>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

@@ -1,50 +1,25 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Handwritten Text Translator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
+<body class="bg">
 
-<div class="container">
-    <h1>Handwritten Text Translator 🔤🎧</h1>
+<section class="landing">
+    <div class="landing-box">
+        <h1>Ready to convert your handwritten/Printed image to text?</h1>
+        <p>
+            Upload your handwritten notes, translate them instantly,
+            and listen to the output in multiple languages.
+        </p>
 
-    <form id="uploadForm">
-        <label>Upload Image:</label>
-        <input type="file" name="image" id="image" accept="image/*" required>
-
-        <label>Text Type:</label>
-        <select name="mode" id="mode">
-            <option value="printed">Printed</option>
-            <option value="handwritten">Handwritten (Cursive Supported)</option>
-        </select>
-
-        <label>Translate To:</label>
-        <select name="language" id="language">
-            <option>English</option>
-            <option>Hindi</option>
-            <option>Kannada</option>
-            <option>Telugu</option>
-            <option>Tamil</option>
-        </select>
-
-        <button type="submit">Process</button>
-    </form>
-
-    <div id="loader" class="hidden">Processing...</div>
-
-    <div class="output">
-        <h3>Extracted Text</h3>
-        <p id="extractedText"></p>
-
-        <h3>Translated Text</h3>
-        <p id="translatedText"></p>
-
-        <audio id="audioPlayer" controls class="hidden"></audio>
+        <a href="/translate" class="continue-btn">Continue</a>
     </div>
-</div>
+</section>
 
-<script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

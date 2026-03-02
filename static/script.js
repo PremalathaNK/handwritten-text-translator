@@ -1,35 +1,49 @@
-document.getElementById("uploadForm").addEventListener("submit", function (e) {
+
+const form = document.getElementById("uploadForm");
+const loader = document.getElementById("loader");
+const extractedText = document.getElementById("extractedText");
+const translatedText = document.getElementById("translatedText");
+const audioPlayer = document.getElementById("audioPlayer");
+
+form.addEventListener("submit", async function (e) {
     e.preventDefault();
 
-    const formData = new FormData(this);
+    // Reset UI
+    loader.classList.remove("hidden");
+    extractedText.innerText = "";
+    translatedText.innerText = "";
+    audioPlayer.classList.add("hidden");
+    audioPlayer.src = "";
 
-    document.getElementById("loader").classList.remove("hidden");
-    document.getElementById("audioPlayer").classList.add("hidden");
+    const formData = new FormData(form);
 
-    fetch("/process", {
-        method: "POST",
-        body: formData
-    })
-    .then(res => res.json())
-    .then(data => {
-        document.getElementById("loader").classList.add("hidden");
+    try {
+        const response = await fetch("/process", {
+            method: "POST",
+            body: formData
+        });
+
+        const data = await response.json();
+
+        loader.classList.add("hidden");
 
         if (data.error) {
             alert(data.error);
             return;
         }
 
-        document.getElementById("extractedText").innerText = data.extracted_text;
-        document.getElementById("translatedText").innerText = data.translated_text;
+        // Show text results
+        extractedText.innerText = data.extracted_text;
+        translatedText.innerText = data.translated_text;
 
-        const audioPlayer = document.getElementById("audioPlayer");
+        // Play audio (BASE64)
         audioPlayer.src = "data:audio/mp3;base64," + data.audio_base64;
         audioPlayer.classList.remove("hidden");
         audioPlayer.play();
-    })
-    .catch(err => {
-        document.getElementById("loader").classList.add("hidden");
-        alert("Something went wrong!");
-        console.error(err);
-    });
+
+    } catch (error) {
+        loader.classList.add("hidden");
+        alert("Something went wrong. Please try again.");
+        console.error(error);
+    }
 });

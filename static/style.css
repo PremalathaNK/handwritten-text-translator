@@ -1,54 +1,198 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ---------------- BODY & BACKGROUND ---------------- */
 body {
-    font-family: Arial, sans-serif;
-    background: #f4f6f8;
+    font-family: 'Poppins', sans-serif;
+    background: url("images/bg.png") no-repeat center center/cover;
+    min-height: 100vh;
+    color: #ffffff;
 }
 
-.container {
-    width: 500px;
-    margin: 40px auto;
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+/* Dark overlay for readability */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    z-index: -1;
 }
 
-h1 {
+/* ---------------- LANDING PAGE ---------------- */
+.landing {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.landing-box {
+    background: rgba(0, 0, 0, 0.45); /* transparent only for text area */
+    backdrop-filter: blur(2px);
+    padding: 50px 60px;
+    border-radius: 18px;
+    max-width: 650px;
     text-align: center;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
 }
 
+.landing-box h1 {
+    font-size: 2.6rem;
+    color: #ffd369;
+    margin-bottom: 20px;
+}
+
+.landing-box p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    opacity: 0.9;
+}
+
+/* Continue Button */
+.landing-box a {
+    display: inline-block;
+    margin-top: 35px;
+    padding: 14px 40px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 30px;
+    text-decoration: none;
+    background: linear-gradient(135deg, #ff9800, #ff5722);
+    color: white;
+    transition: 0.3s ease;
+}
+
+.landing-box a:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 87, 34, 0.8);
+}
+
+/* ---------------- TRANSLATOR PAGE ---------------- */
+.title {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 2.6rem;
+    color: #ffd369;
+}
+
+.subtitle {
+    text-align: center;
+    margin-bottom: 35px;
+    opacity: 0.9;
+}
+
+.main-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr 1fr;
+    gap: 25px;
+    padding: 0 40px;
+}
+
+/* Glass cards */
+.card {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+}
+
+.card h2 {
+    margin-bottom: 15px;
+    color: #ffcc80;
+}
+
+.card h4 {
+    margin-top: 18px;
+    margin-bottom: 8px;
+}
+
+/* ---------------- FORM ---------------- */
 label {
     display: block;
-    margin-top: 15px;
+    margin-top: 14px;
+    font-weight: 500;
 }
 
-input, select, button {
+input, select {
     width: 100%;
-    padding: 8px;
-    margin-top: 5px;
+    padding: 10px;
+    margin-top: 6px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
 }
 
+/* Button */
 button {
-    background: #007bff;
-    color: white;
-    border: none;
+    width: 100%;
+    padding: 12px;
     margin-top: 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 10px;
+    border: none;
+    background: linear-gradient(135deg, #ff9800, #ff5722);
+    color: white;
     cursor: pointer;
+    transition: 0.3s;
 }
 
 button:hover {
-    background: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(255,87,34,0.7);
 }
 
-.output {
-    margin-top: 20px;
+/* ---------------- OUTPUT ---------------- */
+.text-box {
+    min-height: 120px;
+    background: rgba(0,0,0,0.5);
+    padding: 12px;
+    border-radius: 8px;
+    line-height: 1.6;
 }
 
+/* Loader */
+#loader {
+    margin-top: 15px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Audio */
+audio {
+    width: 100%;
+    margin-top: 15px;
+}
+
+/* Utility */
 .hidden {
     display: none;
 }
 
-#loader {
+/* Footer */
+footer {
     text-align: center;
-    margin-top: 15px;
-    font-weight: bold;
+    margin: 40px 0 20px;
+    opacity: 0.85;
+}
+
+/* ---------------- RESPONSIVE ---------------- */
+@media (max-width: 900px) {
+    .main-layout {
+        grid-template-columns: 1fr;
+        padding: 0 20px;
+    }
+
+    .landing-box {
+        padding: 40px 25px;
+    }
+
+    .landing-box h1 {
+        font-size: 2rem;
+    }
 }
