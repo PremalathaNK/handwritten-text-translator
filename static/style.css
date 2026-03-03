@@ -44,12 +44,14 @@ body::before {
     font-size: 2.6rem;
     color: #ffd369;
     margin-bottom: 20px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 .landing-box p {
     font-size: 1.1rem;
     line-height: 1.7;
     opacity: 0.9;
+    font-family: cursive;
 }
 
 /* Continue Button */
@@ -61,7 +63,7 @@ body::before {
     font-weight: 600;
     border-radius: 30px;
     text-decoration: none;
-    background: linear-gradient(135deg, #ff9800, #ff5722);
+    background: linear-gradient(135deg, #0a41a1, #ff5722);
     color: white;
     transition: 0.3s ease;
 }
@@ -77,12 +79,15 @@ body::before {
     margin-top: 30px;
     font-size: 2.6rem;
     color: #ffd369;
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .subtitle {
     text-align: center;
     margin-bottom: 35px;
     opacity: 0.9;
+    font-size: large;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .main-layout {
@@ -136,7 +141,7 @@ button {
     font-weight: 600;
     border-radius: 10px;
     border: none;
-    background: linear-gradient(135deg, #ff9800, #ff5722);
+    background: linear-gradient(135deg, #094991, #0d48ae);
     color: white;
     cursor: pointer;
     transition: 0.3s;
